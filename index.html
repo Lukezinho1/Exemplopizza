@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Express - Experiência Gastronômica Única</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff6b35;
+            --secondary: #f7931e;
+            --accent: #ffd23f;
+            --dark: #2c1810;
+            --light: #fff9f0;
+            --text: #2d3748;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --gradient-dark: linear-gradient(135deg, #e55a2b 0%, #e0851a 100%);
+            --shadow: 0 20px 40px rgba(255, 107, 53, 0.15);
+            --shadow-hover: 0 30px 60px rgba(255, 107, 53, 0.25);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--light);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: var(--gradient);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><pattern id="pizza" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="15" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/><circle cx="20" cy="20" r="8" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23pizza)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: slideInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: slideInUp 1s ease-out 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: white;
+            color: var(--primary);
+            padding: 18px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            animation: slideInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        /* Floating Elements */
+        .floating-pizza {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-pizza:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-pizza:nth-child(2) { top: 60%; right: 15%; animation-delay: 2s; }
+        .floating-pizza:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 4s; }
+
+        /* About Section */
+        .about {
+            padding: 120px 0;
+            background: white;
+            position: relative;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to bottom, var(--light), white);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 4rem;
+            color: var(--dark);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            color: #64748b;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateX(10px);
+            background: white;
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .feature span {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        /* Menu Section */
+        .menu {
+            padding: 120px 0;
+            background: var(--light);
+            position: relative;
+        }
+
+        .menu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to bottom, white, var(--light));
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .menu-image {
+            width: 100%;
+            height: 250px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="3" fill="rgba(255,255,255,0.2)"/><circle cx="80" cy="40" r="2" fill="rgba(255,255,255,0.2)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.2)"/></svg>');
+            background-size: 50px 50px;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .menu-content {
+            padding: 2rem;
+        }
+
+        .menu-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .menu-description {
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .menu-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .menu-ingredients {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 120px 0;
+            background: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to bottom, var(--light), white);
+        }
+
+        .contact-info {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-info p {
+            font-size: 1.3rem;
+            color: #64748b;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .contact-card {
+            background: var(--light);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .contact-card h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .contact-card p {
+            color: #64748b;
+            margin-bottom: 0;
+            font-size: 1.1rem;
+        }
+
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: #25d366;
+            color: white;
+            padding: 20px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            margin-top: 3rem;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(37, 211, 102, 0.4);
+            background: #128c7e;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gradient-dark);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <i class="fas fa-pizza-slice"></i>
+                Pizza Express
+            </div>
+            <ul class="nav-links">
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#menu">Cardápio</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="floating-pizza">🍕</div>
+        <div class="floating-pizza">🍕</div>
+        <div class="floating-pizza">🍕</div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <h1>Experiência Gastronômica Única</h1>
+                <p>Descubra o sabor autêntico da Itália com nossas pizzas artesanais. Massa fermentada por 24h, ingredientes premium e forno a lenha tradicional.</p>
+                <a href="#contact" class="cta-button">
+                    <i class="fas fa-phone"></i>
+                    Fazer Pedido Agora
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">Nossa História</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Mais de 15 anos de paixão</h3>
+                    <p>Nossa jornada começou com um sonho simples: criar as melhores pizzas artesanais da cidade. Hoje, somos referência em qualidade e sabor, mantendo viva a tradição italiana com um toque brasileiro.</p>
+                    <p>Cada pizza é preparada com amor e dedicação, usando técnicas centenárias e ingredientes selecionados que garantem uma experiência gastronômica inesquecível.</p>
+                    
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-leaf feature-icon"></i>
+                            <span>Ingredientes Orgânicos</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-clock feature-icon"></i>
+                            <span>Entrega Express</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-fire feature-icon"></i>
+                            <span>Forno a Lenha</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-star feature-icon"></i>
+                            <span>Qualidade Premium</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <h3>Nossos Diferenciais</h3>
+                    <div style="background: var(--light); padding: 2rem; border-radius: 20px; border-left: 4px solid var(--primary);">
+                        <ul style="list-style: none; color: #64748b; font-size: 1.1rem;">
+                            <li style="margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary);"></i>
+                                Massa fermentada por 24h naturalmente
+                            </li>
+                            <li style="margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary);"></i>
+                                Molho de tomate caseiro e fresco
+                            </li>
+                            <li style="margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary);"></i>
+                                Queijos importados da Itália
+                            </li>
+                            <li style="margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary);"></i>
+                                Forno a lenha tradicional italiano
+                            </li>
+                            <li style="margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary);"></i>
+                                Delivery em até 25 minutos
+                            </li>
+                            <li style="margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem;">
+                                <i class="fas fa-check-circle" style="color: var(--primary);"></i>
+                                Atendimento personalizado VIP
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu">
+        <div class="container">
+            <h2 class="section-title">Cardápio Premium</h2>
+            <div class="menu-grid">
+                <!-- Pizza Margherita -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <i class="fas fa-pizza-slice"></i>
+                    </div>
+                    <div class="menu-content">
+                        <h3 class="menu-title">Margherita Clássica</h3>
+                        <p class="menu-description">A autêntica pizza italiana com molho de tomate San Marzano, mussarela de búfala e manjericão fresco da horta.</p>
+                        <div class="menu-price">R$ 32,90</div>
+                        <div class="menu-ingredients">Molho San Marzano, mussarela de búfala, manjericão orgânico</div>
+                    </div>
+                </div>
+
+                <!-- Pizza Pepperoni -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <i class="fas fa-pizza-slice"></i>
+                    </div>
+                    <div class="menu-content">
+                        <h3 class="menu-title">Pepperoni Supreme</h3>
+                        <p class="menu-description">Pepperoni artesanal picante, mussarela premium e molho de tomate caseiro. Para os amantes de sabores intensos.</p>
+                        <div class="menu-price">R$ 38,90</div>
+                        <div class="menu-ingredients">Molho caseiro, mussarela premium, pepperoni artesanal</div>
+                    </div>
+                </div>
+
+                <!-- Pizza Quatro Queijos -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <i class="fas fa-pizza-slice"></i>
+                    </div>
+                    <div class="menu-content">
+                        <h3 class="menu-title">Quattro Formaggi</h3>
+                        <p class="menu-description">Harmonia perfeita de quatro queijos italianos: mussarela, parmesão, gorgonzola e provolone. Uma sinfonia de sabores.</p>
+                        <div class="menu-price">R$ 42,90</div>
+                        <div class="menu-ingredients">Mussarela, parmesão, gorgonzola, provolone</div>
+                    </div>
+                </div>
+
+                <!-- Pizza Calabresa -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <i class="fas fa-pizza-slice"></i>
+                    </div>
+                    <div class="menu-content">
+                        <h3 class="menu-title">Calabresa Artesanal</h3>
+                        <p class="menu-description">Calabresa artesanal premium, cebola caramelizada e mussarela. O sabor brasileiro com toque italiano.</p>
+                        <div class="menu-price">R$ 36,90</div>
+                        <div class="menu-ingredients">Molho caseiro, mussarela, calabresa premium, cebola caramelizada</div>
+                    </div>
+                </div>
+
+                <!-- Pizza Frango Catupiry -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <i class="fas fa-pizza-slice"></i>
+                    </div>
+                    <div class="menu-content">
+                        <h3 class="menu-title">Frango Catupiry Gourmet</h3>
+                        <p class="menu-description">Frango desfiado premium, catupiry cremoso e milho orgânico. A combinação perfeita de sabores brasileiros.</p>
+                        <div class="menu-price">R$ 39,90</div>
+                        <div class="menu-ingredients">Molho caseiro, mussarela, frango premium, catupiry, milho orgânico</div>
+                    </div>
+                </div>
+
+                <!-- Pizza Portuguesa -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <i class="fas fa-pizza-slice"></i>
+                    </div>
+                    <div class="menu-content">
+                        <h3 class="menu-title">Portuguesa Premium</h3>
+                        <p class="menu-description">Presunto premium, ovos caipiras, cebola roxa, azeitonas importadas e mussarela. A preferida dos brasileiros.</p>
+                        <div class="menu-price">R$ 37,90</div>
+                        <div class="menu-ingredients">Molho caseiro, mussarela, presunto premium, ovos caipiras, cebola roxa, azeitonas</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Faça Seu Pedido</h2>
+            <div class="contact-info">
+                <p>Estamos prontos para proporcionar uma experiência gastronômica única! Entre em contato e descubra por que somos a pizzaria mais amada da cidade.</p>
+                
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h4><i class="fas fa-phone"></i> Telefone VIP</h4>
+                        <p>(11) 99999-9999</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4><i class="fas fa-clock"></i> Horário Premium</h4>
+                        <p>Segunda a Domingo<br>18h às 00h</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4><i class="fas fa-map-marker-alt"></i> Localização</h4>
+                        <p>Rua das Pizzas, 123<br>Centro - São Paulo/SP</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4><i class="fas fa-motorcycle"></i> Delivery Express</h4>
+                        <p>Entrega em até 25 min<br>Taxa: R$ 6,00</p>
+                    </div>
+                </div>
+
+                <a href="https://wa.me/5511999999999" class="whatsapp-button" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    Pedir pelo WhatsApp VIP
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 - Pizza Express. Experiência gastronômica única. Todos os direitos reservados.</p>
+            <p>Site de exemplo para Portfólio: Matheus Heleno</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Enhanced scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.backdropFilter = 'blur(20px)';
+                header.style.boxShadow = '0 4px 30px rgba(0,0,0,0.15)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(20px)';
+                header.style.boxShadow = '0 4px 30px rgba(0,0,0,0.1)';
+            }
+        });
+
+        // Enhanced animation for menu items on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0) scale(1)';
+                    }, index * 200);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all menu items and contact cards
+        document.querySelectorAll('.menu-item, .contact-card, .feature').forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(30px) scale(0.95)';
+            item.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(item);
+        });
+
+        // Enhanced hover effects
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add parallax effect to floating pizzas
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelectorAll('.floating-pizza');
+            
+            parallax.forEach((element, index) => {
+                const speed = 0.5 + (index * 0.1);
+                element.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1}deg)`;
+            });
+        });
+
+        // Add typing effect to hero title
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize typing effect when page loads
+        window.addEventListener('load', function() {
+            const heroTitle = document.querySelector('.hero h1');
+            const originalText = heroTitle.textContent;
+            typeWriter(heroTitle, originalText, 80);
+        });
+    </script>
+</body>
+</html> 
